@@ -1,0 +1,4 @@
+data/*
+data-old/*
+*.gdoc
+.DS_Store
