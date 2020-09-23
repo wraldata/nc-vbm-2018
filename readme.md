@@ -7,7 +7,7 @@ Analysis was performed in SQL and Python by [Sophie Chou](https://twitter.com/mp
 *Note: Because this data is preliminary, it is subject to change upon further review.*
 
 ## Basic statistics
-In North Carolina, absentee ballots include both ballots cast at early voting locations (also called "one-stop" voting) well as those cast by mail. Both types of ballots are included in the state's absentee data, which details all ballot *requests* by North Carolina voters. [Click here for the full SQL queries generating the results below.]() 
+In North Carolina, absentee ballots include both ballots cast at early voting locations (also called "one-stop" voting) well as those cast by mail. Both types of ballots are included in the state's absentee data, which details all ballot *requests* by North Carolina voters. [Click here for the full SQL queries generating the results below.](https://github.com/wraldata/nc-vbm-2018/blob/8badea41d19adbfa1c4a2c1251f021d0960ee0e6/vbm-analysis.sql#L9) 
 
 This analysis focuses solely on absentee by-mail ballots in 2018 *returned* to county election officials, since some ballots sent to voters go unreturned or unreturned ballots are automatically spoiled if a voter casts a ballot in person or submits a duplicate ballot by mail. Per the suggestion of the State Board of Elections, we define returned ballots in the data as ballot requests with valid return dates.
 
@@ -35,7 +35,7 @@ Request count|Voter count
 
 ## Rejection rate analysis
 
-Overall, 6,520 out of 104,091 ballots returned during the 2018 election were rejected, a 6.3% rejection rate. [Click here for the full SQL queries generating the results below.]() 
+Overall, 6,520 out of 104,091 ballots returned during the 2018 election were rejected, a 6.3% rejection rate. [Click here for the full SQL queries generating the results below.](https://github.com/wraldata/nc-vbm-2018/blob/8badea41d19adbfa1c4a2c1251f021d0960ee0e6/vbm-analysis.sql#L88) 
 
 ### Returned mail-in ballots by status
 Ballot return status|count|percent
@@ -97,7 +97,7 @@ By this measure, ballots case by black voters are rejected at almost three times
 
 ## Analysis of voting by other methods
 
-Even if a mail-in ballot is rejected, there are still options for people who want to get their votes counted. We requested a [voter history snapshot](https://s3.amazonaws.com/dl.ncsbe.gov/ENRS/Request/2020-08-16%20vh_from_snapshot.zip) from the State Board of Elections as of Jan. 1, 2019 (the closest available to the 2018 election) to see how many of the mail-in ballots ultimately rejected were eventually counted some other way. [Click here for the full SQL queries generating the results below.]() 
+Even if a mail-in ballot is rejected, there are still options for people who want to get their votes counted. We requested a [voter history snapshot](https://s3.amazonaws.com/dl.ncsbe.gov/ENRS/Request/2020-08-16%20vh_from_snapshot.zip) from the State Board of Elections as of Jan. 1, 2019 (the closest available to the 2018 election) to see how many of the mail-in ballots ultimately rejected were eventually counted some other way. [Click here for the full SQL queries generating the results below.](https://github.com/wraldata/nc-vbm-2018/blob/8badea41d19adbfa1c4a2c1251f021d0960ee0e6/vbm-analysis.sql#L297) 
 
 The 6,520 rejected ballots from 2018 were returned by 6,383 unique voters. That's out of a total of 103,072 unique voters with returned ballots.
 
@@ -179,7 +179,7 @@ To compare rejection rates between ballots cast by minority voters and white vot
 
 ## County-level analysis
 
-Elections are administered by different boards in each of North Carolina's 100 counties, so we can examine the differences in acceptance rates for each. [Click here for the full SQL queries generating the results below.]()
+Elections are administered by different boards in each of North Carolina's 100 counties, so we can examine the differences in acceptance rates for each. [Click here for the full SQL queries generating the results below.](https://github.com/wraldata/nc-vbm-2018/blob/8badea41d19adbfa1c4a2c1251f021d0960ee0e6/vbm-analysis.sql#L1247)
 
 ### County-by-county acceptance rates by race, returned ballots
 County|Overall rate|White rate|Black rate|Undesignated rate|Multi-racial rate|Other rate|Asian rate|American Indian rate
