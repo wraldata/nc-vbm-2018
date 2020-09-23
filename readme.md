@@ -56,7 +56,7 @@ CONFLICT|5|0.0
 We can use the `race`  field to further break these rates down by demographics, both in raw numbers and percentages.
 
 ### 2018 mail-in ballot rejections by race, raw
-Ballot return status|White|Black|Undesignated|One or more races|Other|Asian|Indian American
+Ballot return status|White|Black|Undesignated|Two or more races|Other|Asian|Indian American
 ---|---|---|---|---|---|---|---
 ACCEPTED|74,388|12,893|4,730|699|1,997|2,338|526
 VOTER SIGNATURE MISSING|1,718|819|104|28|68|71|17
@@ -71,7 +71,7 @@ DUPLICATE|6|3|1|NULL|NULL|NULL|NULL
 CONFLICT|1|3|1|NULL|NULL|NULL|NULL
 
 ### 2018 mail-in ballot rejections by race, percent
-Ballot return status|White|Black|Undesignated|One or more races|Other|Asian|Indian American
+Ballot return status|White|Black|Undesignated|Two or more races|Other|Asian|Indian American
 ---|---|---|---|---|---|---|---
 ACCEPTED|95.17|86.44|94.39|92.46|92.41|92.93|92.12
 VOTER SIGNATURE MISSING|2.20|5.49|2.08|3.70|3.15|2.82|2.98
