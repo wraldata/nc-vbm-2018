@@ -5,8 +5,6 @@ ProPublica and WRAL News partnered in the summer of 2020 to analyze data on abse
 
 Analysis was performed in SQL and Python by [Sophie Chou](https://twitter.com/mpetitchou), of ProPublica, and [Tyler Dukes](https://twitter.com/mtdukes), of WRAL News. ProPublica data reporter [Haru Coryne](https://twitter.com/harucoryne) reviewed the code and analysis.
 
-*Note: Because this data is preliminary, it is subject to change upon further review.*
-
 ## Basic statistics
 In North Carolina, absentee ballots include both ballots cast at early voting locations (also called "one-stop" voting) well as those cast by mail. Both types of ballots are included in the state's absentee data, which details all ballot *requests* by North Carolina voters. [Click here for the full SQL queries generating the results below.](https://github.com/wraldata/nc-vbm-2018/blob/8badea41d19adbfa1c4a2c1251f021d0960ee0e6/vbm-analysis.sql#L9) 
 

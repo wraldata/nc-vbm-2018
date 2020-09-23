@@ -10,7 +10,7 @@
 ####################
 
 #run a count of all mail-in ballots
-with a valid return date
+#with a valid return date
 SELECT COUNT(ncid) AS count
 FROM absentee
 WHERE ballot_req_type = 'MAIL'
