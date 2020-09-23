@@ -98,6 +98,201 @@ AND ballot_rtn_dt <> ''
 GROUP BY ballot_rtn_status
 ORDER BY count DESC;
 
+#breakdown by race for mail-in ballots, by raw numbers
+#removing ballots never received by boards of elections
+SELECT categories.ballot_rtn_status, white_table.white_raw, black_table.black_raw, undesig_table.undesig_raw, multi_table.multi_raw, other_table.other_raw, asian_table.asian_raw, indian_am_table.indian_am_raw
+FROM (
+	SELECT ballot_rtn_status
+	FROM absentee
+	WHERE ballot_req_type = 'MAIL'
+	AND ballot_rtn_status <> ''
+	GROUP BY ballot_rtn_status
+	ORDER BY ballot_rtn_status
+) categories
+LEFT JOIN (
+	SELECT ballot_rtn_status, COUNT(ballot_rtn_status) AS white_raw
+	FROM absentee
+	WHERE race = "WHITE"
+	AND ballot_req_type = "MAIL"
+	AND ballot_rtn_dt <> ''
+	GROUP BY ballot_rtn_status
+) AS white_table
+ON categories.ballot_rtn_status = white_table.ballot_rtn_status
+LEFT JOIN (
+	SELECT ballot_rtn_status, COUNT(ballot_rtn_status) AS black_raw
+	FROM absentee
+	WHERE race = "BLACK or AFRICAN AMERICAN"
+	AND ballot_req_type = "MAIL"
+	AND ballot_rtn_dt <> ''
+	GROUP BY ballot_rtn_status
+) AS black_table
+ON categories.ballot_rtn_status = black_table.ballot_rtn_status
+LEFT JOIN (
+	SELECT ballot_rtn_status, COUNT(ballot_rtn_status) AS undesig_raw
+	FROM absentee
+	WHERE race = "UNDESIGNATED"
+	AND ballot_req_type = "MAIL"
+	AND ballot_rtn_dt <> ''
+	GROUP BY ballot_rtn_status
+) AS undesig_table
+ON categories.ballot_rtn_status = undesig_table.ballot_rtn_status
+LEFT JOIN (
+	SELECT ballot_rtn_status, COUNT(ballot_rtn_status) AS multi_raw
+	FROM absentee
+	WHERE race = "TWO or MORE RACES"
+	AND ballot_req_type = "MAIL"
+	AND ballot_rtn_dt <> ''
+	GROUP BY ballot_rtn_status
+) as multi_table
+ON categories.ballot_rtn_status = multi_table.ballot_rtn_status
+LEFT JOIN (
+	SELECT ballot_rtn_status, COUNT(ballot_rtn_status) AS other_raw
+	FROM absentee
+	WHERE race = "OTHER"
+	AND ballot_req_type = "MAIL"
+	AND ballot_rtn_dt <> ''
+	GROUP BY ballot_rtn_status
+) AS other_table
+ON categories.ballot_rtn_status = other_table.ballot_rtn_status
+LEFT JOIN (
+	SELECT ballot_rtn_status, COUNT(ballot_rtn_status) AS asian_raw
+	FROM absentee
+	WHERE race = "ASIAN"
+	AND ballot_req_type = "MAIL"
+	AND ballot_rtn_dt <> ''
+	GROUP BY ballot_rtn_status
+) as asian_table
+ON categories.ballot_rtn_status = asian_table.ballot_rtn_status
+LEFT JOIN (
+	SELECT ballot_rtn_status, COUNT(ballot_rtn_status) AS indian_am_raw
+	FROM absentee
+	WHERE race = "INDIAN AMERICAN or ALASKA NATIVE"
+	AND ballot_req_type = "MAIL"
+	AND ballot_rtn_dt <> ''
+	GROUP BY ballot_rtn_status
+) AS indian_am_table
+ON categories.ballot_rtn_status = indian_am_table.ballot_rtn_status
+ORDER BY white_raw desc;
+
+#breakdown by race for mail-in ballots, by percentage
+#removing ballots never received by boards of elections
+SELECT categories.ballot_rtn_status, white_table.white_rate, black_table.black_rate, undesig_table.undesig_rate, multi_table.multi_rate, other_table.other_rate, asian_table.asian_rate, indian_am_table.indian_am_rate
+FROM (
+	SELECT ballot_rtn_status
+	FROM absentee
+	WHERE ballot_req_type = 'MAIL'
+	AND ballot_rtn_dt <> ''
+	GROUP BY ballot_rtn_status
+	ORDER BY ballot_rtn_status
+) categories
+LEFT JOIN (
+	SELECT ballot_rtn_status, ROUND((((COUNT(ballot_rtn_status) / (SELECT COUNT(*) FROM absentee WHERE RACE = "WHITE" AND ballot_req_type = "MAIL" AND ballot_rtn_dt <> ''))) * 100), 2) as white_rate
+	FROM absentee
+	WHERE race = "WHITE"
+	AND ballot_req_type = "MAIL"
+	AND ballot_rtn_dt <> ''
+	GROUP BY ballot_rtn_status
+) AS white_table
+ON categories.ballot_rtn_status = white_table.ballot_rtn_status
+LEFT JOIN (
+	SELECT ballot_rtn_status, ROUND((((COUNT(ballot_rtn_status) / (SELECT COUNT(*) FROM absentee WHERE race = "BLACK or AFRICAN AMERICAN" AND ballot_req_type = "MAIL" AND ballot_rtn_dt <> ''))) * 100), 2) as black_rate
+	FROM absentee
+	WHERE race = "BLACK or AFRICAN AMERICAN"
+	AND ballot_req_type = "MAIL"
+	AND ballot_rtn_dt <> ''
+	GROUP BY ballot_rtn_status
+) AS black_table
+ON categories.ballot_rtn_status = black_table.ballot_rtn_status
+LEFT JOIN (
+	SELECT ballot_rtn_status, ROUND((((COUNT(ballot_rtn_status) / (SELECT COUNT(*) FROM absentee WHERE race = "UNDESIGNATED" AND ballot_req_type = "MAIL" AND ballot_rtn_dt <> ''))) * 100), 2) AS undesig_rate
+	FROM absentee
+	WHERE race = "UNDESIGNATED"
+	AND ballot_req_type = "MAIL"
+	AND ballot_rtn_dt <> ''
+	GROUP BY ballot_rtn_status
+) AS undesig_table
+ON categories.ballot_rtn_status = undesig_table.ballot_rtn_status
+LEFT JOIN (
+	SELECT ballot_rtn_status, ROUND((((COUNT(ballot_rtn_status) / (SELECT COUNT(*) FROM absentee WHERE race = "TWO or MORE RACES" AND ballot_req_type = "MAIL" AND ballot_rtn_dt <> ''))) * 100), 2) as multi_rate
+	FROM absentee
+	WHERE race = "TWO or MORE RACES"
+	AND ballot_req_type = "MAIL"
+	AND ballot_rtn_dt <> ''
+	GROUP BY ballot_rtn_status
+) as multi_table
+ON categories.ballot_rtn_status = multi_table.ballot_rtn_status
+LEFT JOIN (
+	SELECT ballot_rtn_status, ROUND((((COUNT(ballot_rtn_status) / (SELECT COUNT(*) FROM absentee WHERE race = "OTHER" AND ballot_req_type = "MAIL" AND ballot_rtn_dt <> ''))) * 100), 2) as other_rate
+	FROM absentee
+	WHERE race = "OTHER"
+	AND ballot_req_type = "MAIL"
+	AND ballot_rtn_dt <> ''
+	GROUP BY ballot_rtn_status
+) AS other_table
+ON categories.ballot_rtn_status = other_table.ballot_rtn_status
+LEFT JOIN (
+	SELECT ballot_rtn_status, ROUND((((COUNT(ballot_rtn_status) / (SELECT COUNT(*) FROM absentee WHERE race = "ASIAN" AND ballot_req_type = "MAIL" AND ballot_rtn_dt <> ''))) * 100), 2) as asian_rate
+	FROM absentee
+	WHERE race = "ASIAN"
+	AND ballot_req_type = "MAIL"
+	AND ballot_rtn_dt <> ''
+	GROUP BY ballot_rtn_status
+) as asian_table
+ON categories.ballot_rtn_status = asian_table.ballot_rtn_status
+LEFT JOIN (
+	SELECT ballot_rtn_status, ROUND((((COUNT(ballot_rtn_status) / (SELECT COUNT(*) FROM absentee WHERE race = "INDIAN AMERICAN or ALASKA NATIVE" AND ballot_req_type = "MAIL" AND ballot_rtn_dt <> ''))) * 100), 2) as indian_am_rate
+	FROM absentee
+	WHERE race = "INDIAN AMERICAN or ALASKA NATIVE"
+	AND ballot_req_type = "MAIL"
+	AND ballot_rtn_dt <> ''
+	GROUP BY ballot_rtn_status
+) AS indian_am_table
+ON categories.ballot_rtn_status = indian_am_table.ballot_rtn_status
+ORDER BY white_rate desc;
+
+#calculate the rejection rates for white and black voters
+#and find the disparity, NOT including unreceived ballots
+SET @white_rec_rate = 100 - (
+	SELECT ROUND((((COUNT(ballot_rtn_status) / (SELECT COUNT(*) FROM absentee WHERE RACE = "WHITE" AND ballot_req_type = "MAIL" AND ballot_rtn_dt <> ''))) * 100), 2) as white_rate
+	FROM absentee
+	WHERE race = "WHITE"
+	AND ballot_req_type = "MAIL"
+	AND ballot_rtn_dt <> ''
+	AND ballot_rtn_status = 'ACCEPTED'
+	GROUP BY ballot_rtn_status
+);
+SET @black_rec_rate = 100 - (
+	SELECT ROUND((((COUNT(ballot_rtn_status) / (SELECT COUNT(*) FROM absentee WHERE race = "BLACK or AFRICAN AMERICAN" AND ballot_req_type = "MAIL" AND ballot_rtn_dt <> ''))) * 100), 2) as black_rate
+	FROM absentee
+	WHERE race = "BLACK or AFRICAN AMERICAN"
+	AND ballot_rtn_status = 'ACCEPTED'
+	AND ballot_req_type = "MAIL"
+	AND ballot_rtn_dt <> ''
+	GROUP BY ballot_rtn_status
+);
+SET @asian_rec_rate = 100 - (
+	SELECT ROUND((((COUNT(ballot_rtn_status) / (SELECT COUNT(*) FROM absentee WHERE race = "ASIAN" AND ballot_req_type = "MAIL" AND ballot_rtn_dt <> ''))) * 100), 2) as black_rate
+	FROM absentee
+	WHERE race = "ASIAN"
+	AND ballot_rtn_status = 'ACCEPTED'
+	AND ballot_req_type = "MAIL"
+	AND ballot_rtn_dt <> ''
+	GROUP BY ballot_rtn_status
+);
+SET @indian_am_rec_rate = 100 - (
+	SELECT ROUND((((COUNT(ballot_rtn_status) / (SELECT COUNT(*) FROM absentee WHERE race = "INDIAN AMERICAN or ALASKA NATIVE" AND ballot_req_type = "MAIL" AND ballot_rtn_dt <> ''))) * 100), 2) as black_rate
+	FROM absentee
+	WHERE race = "INDIAN AMERICAN or ALASKA NATIVE"
+	AND ballot_rtn_status = 'ACCEPTED'
+	AND ballot_req_type = "MAIL"
+	AND ballot_rtn_dt <> ''
+	GROUP BY ballot_rtn_status
+);
+
+SELECT ROUND(@black_rec_rate/ @white_rec_rate, 2) AS rate_ratio;
+SELECT ROUND(@asian_rec_rate / @white_rec_rate, 2) AS rate_ratio;
+SELECT ROUND(@indian_am_rec_rate / @white_rec_rate, 2) AS rate_ratio;
+
 #######################################
 # Analysis of voting by other methods #
 #######################################
