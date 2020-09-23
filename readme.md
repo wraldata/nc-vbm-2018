@@ -1,3 +1,4 @@
+
 # 2018 NC vote by mail analysis
 
 ProPublica and WRAL News partnered in the summer of 2020 to analyze data on absentee by-mail ballots cast in the 2018 general election in North Carolina. The analysis used absentee data published by the [North Carolina State Board of Elections](https://s3.amazonaws.com/dl.ncsbe.gov/ENRS/2018_11_06/absentee_20181106.zip).
@@ -93,11 +94,11 @@ BLACK or AFRICAN AMERICAN|2.81
 ASIAN|1.46
 INDIAN AMERICAN or ALASKA NATIVE|1.63
 
-By this measure, ballots case by black voters are rejected at almost three times the rate of white voters.
+By this measure, ballots case by Black voters are rejected at almost three times the rate of white voters.
 
 ## Analysis of voting by other methods
 
-Even if a mail-in ballot is rejected, there are still options for people who want to get their votes counted. We requested a [voter history snapshot](https://s3.amazonaws.com/dl.ncsbe.gov/ENRS/Request/2020-08-16%20vh_from_snapshot.zip) from the State Board of Elections as of Jan. 1, 2019 (the closest available to the 2018 election) to see how many of the mail-in ballots ultimately rejected were eventually counted some other way. [Click here for the full SQL queries generating the results below.](https://github.com/wraldata/nc-vbm-2018/blob/8badea41d19adbfa1c4a2c1251f021d0960ee0e6/vbm-analysis.sql#L297) 
+Even if a mail-in ballot is rejected, there are still options for people who want to get their votes counted. We requested a [voter history snapshot](https://s3.amazonaws.com/dl.ncsbe.gov/ENRS/Request/2020-08-16%20vh_from_snapshot.zip) from the State Board of Elections as of Jan. 1, 2019, (the closest available to the 2018 election) to see how many of the rejected mail-in ballots were eventually counted some other way. [Click here for the full SQL queries generating the results below.](https://github.com/wraldata/nc-vbm-2018/blob/8badea41d19adbfa1c4a2c1251f021d0960ee0e6/vbm-analysis.sql#L297) 
 
 The 6,520 rejected ballots from 2018 were returned by 6,383 unique voters. That's out of a total of 103,072 unique voters with returned ballots.
 
@@ -112,7 +113,7 @@ OTHER|163|2,143|7.61
 TWO or MORE RACES|57|754|7.56
 INDIAN AMERICAN or ALASKA NATIVE|45|564|7.98
 
-Of the 6,383 unique voters rejected at least once, 882 eventually had their mail-in ballots accepted (14%). That leaves 5,501 voters whose mail-in ballots were ultimately received and rejected, or about 5.3% of all mail-in voters.
+Of the 6,383 unique voters whose ballots were rejected at least once, 882 eventually had their mail-in ballots accepted (14%). That leaves 5,501 voters whose mail-in ballots were ultimately received and rejected, or about 5.3% of all mail-in voters.
 
 But even accounting for the multiple requests and eventual acceptances, Black voters have their mail-in ballots rejected at almost three times the rate of white voters, and more than twice the overall rate.
 
@@ -176,6 +177,18 @@ Ultimately uncounted | 4.55 | 3.60 | 9.27 | 4.22 | 5.08 | 5.74 | 6.21 | 6.90
 ## Risk ratio analysis
 
 To compare rejection rates between ballots cast by minority voters and white voters, we used a risk ratio analysis, dividing the rate of ballot rejections in the minority group by the rate of ballot rejections among white voters. The resulting ratio, commonly used in epidemiology, gives an estimate for how much more at risk ballots cast by voters in the minority group were to be rejected. [Click here for the full Python notebooks generating the results below.](https://github.com/wraldata/nc-vbm-2018/blob/master/notebooks/RaceRiskRatios.ipynb)
+
+All minority racial groups were more likely to have their ballots rejected. Black voters were more than twice as likely as white voters to have their ballots rejected.
+
+Race | Risk ratio compared to ballots cast by white voters | Total rejected ballots | Lower limit, 95% confidence interval | Upper limit, 95% confidence interval
+--- | --- | --- | --- | ---
+Black | 2.3621 | 2022 | 2.2726 | 2.4551
+Indian American or Alaska Native | 1.6786 | 45 | 1.2402 | 2.272
+Two or More Races | 1.5987 | 57 | 1.2228 | 2.0901
+Other | 1.5933 | 164 | 1.3633 | 1.8622
+Asian | 1.4785 | 178 | 1.2738 | 1.716
+Undesignated | 1.1594 | 281 | 1.0323 | 1.3022
+All minorities (excluding undesignated) | 1.9886 | 2466 | 1.9235 | 2.056
 
 ## County-level analysis
 
